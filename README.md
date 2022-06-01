@@ -7,8 +7,8 @@
 
 ## Creating a github token
 1. Go to this link: https://github.com/settings/tokens
-2. Click on `Personal access tokens` thn click `Generate new token`
-3. check  `repo Full control of private repositories` as true
+2. Click on `Personal access tokens` then click `Generate new token`
+3. Check `repo Full control of private repositories` as true
 4. Click on `Generate token` at end of the page
 
 ## Installing
@@ -16,13 +16,16 @@
 ```sh
 git clone git@github.com:matheusf0/create-repo-by-command-line.git
 ```
-2. `Change` the `line 4` of the file `git-create` with your token that you previously created and `save`
-3. Move the file to your /bin and give execution permission
+2. Give executable permission to files `install.py` and `git-create` file.
+```
+chmod +x install.py git-create
+``` 
+3. Run the install.sh 
 ```sh
-sudo apt install curl -y && sudo mv git-create /bin && sudo chmod +x /bin/git-create
+./install.py
 ```
 
-## Usage
+# Usage
 
 Creating a remote repository at Github
 ```sh
