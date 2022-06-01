@@ -34,11 +34,19 @@ def check_config_folder_exists():
 def load_existing_config_file():
     if platform.system() == "Linux":
         with open(os.path.expanduser(CONFIG_FILE_PATH), "r") as config_file:
-            github_api_token = config_file.read()
-
-        with open(os.path.expanduser("~/.bashrc"), "a") as outfile:
-            outfile.write("\nexport " + github_api_token)
-            outfile.write("\nexport " + github_api_token)
+            config_file.seek(0)
+            github_api_token = config_file.readline()
+            config_file.seek(1)
+            github_username = config_file.readline()
+            config_file.close
+            config_file.seek(2)
+            github_email = config_file.readline()
+            config_file.close
+        with open(os.path.expanduser("~/.bashrc"), "a") as bash_file:
+            bash_file.write("\nexport " + github_api_token)
+            bash_file.write("\nexport " + github_username)
+            bash_file.write("\nexport " + github_email)
+            bash_file.close
         print("Github api token added at you system.")
     else:
         print("Operational system not recognized!")
@@ -48,10 +56,12 @@ def create_new_config_file(filepath):
     print("Creating a new github config file.\n")
     github_api_token = input("Github api token: ")
     github_username = input("Github username: ")
+    github_email = input("Github e-mail: ")
     try:
         with open(filepath, "w+") as config_file:
-            config_file.write("\nGITHUB_API_TOKEN=" + github_api_token)
-            config_file.write("\nGITHUB_USERNAME=" + github_api_token)
+            config_file.write("GITHUB_API_TOKEN=" + github_api_token)
+            config_file.write("\nGITHUB_USERNAME=" + github_username)
+            config_file.write("\nGITHUB_EMAIL=" + github_email)
         config_file.close
         print("Github credentials file created.")
     except FileNotFoundError:
@@ -80,9 +90,8 @@ if check_config_file_exists(CONFIG_FILE_PATH) is False:
         load_existing_config_file()
 else:
     get_recreate_anwser()
-
 try:
     Path("./git-create").rename("/bin/git-create")
     shutil.copy("./git-create", "/bin/git-create")
 except IOError:
-    print("[Error] - Youo can't move the file.\n\tTry using sudo!\n\n\t sudo ./install.py")
+    print("[Error] - You can't move the file.\n\tTry using sudo!\n\n\t sudo ./install.py")

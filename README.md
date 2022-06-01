@@ -9,9 +9,10 @@
 1. Go to this link: https://github.com/settings/tokens
 2. Click on `Personal access tokens` then click `Generate new token`
 3. Check `repo Full control of private repositories` as true
+    > Recomendation: try using a non full permissive permission
 4. Click on `Generate token` at end of the page
 
-## Installing
+# Installing
 1. Clone this repository:
 ```sh
 git clone git@github.com:matheusf0/create-repo-by-command-line.git
@@ -22,12 +23,11 @@ chmod +x install.py git-create
 ``` 
 3. Run the install.sh 
 ```sh
-./install.py
+sudo ./install.py
 ```
 
 # Usage
-
-Creating a remote repository at Github
+The following command will create a new folder with repository name 
 ```sh
 git create <repositoryName>
 ```
