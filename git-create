@@ -1,18 +1,18 @@
 #!/bin/sh
 repository_name=$1
-test -z $name && echo "![ERROR] - Repository name required!" 1>&2 && exit 1
-curl -i -H "Authorization: token ${GITHUB_API_TOKEN}" -d '{"name":"'$repository_name'", "auto_init": false, "private": true }' https://api.github.com/user/repos > /dev/null
+test -z $repository_name && echo "![ERROR] - Repository name required!" 1>&2 && exit 1
+curl -i -H "Authorization: token $GITHUB_API_TOKEN" -d '{"name":"'$repository_name'", "auto_init": false, "private": true }' https://api.github.com/user/repos > /dev/null
 
 
-
-git config user.email ${GITHUB_EMAIL}
-git config user.name ${GITHUB_USERNAME}
+mkdir $repository_name && cd $repository_name
+git config user.email $GITHUB_EMAIL
+git config user.name $GITHUB_USERNAME
 git config --global init.defaultBranch main
 git init
 tee README.md << EOF
-# REPOSITORY CREATED BY COMANDLINE
+# ${repository_name}
 EOF
 git add README.md
 git commit -m "Initial commit"
-git remote add origin git@github.com:${GITHUB_USERNAME}/$repository_name.git
+git remote add origin git@github.com:$GITHUB_USERNAME/$repository_name.git
 git push -f --set-upstream origin main

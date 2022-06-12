@@ -21,7 +21,7 @@ git clone git@github.com:matheusf0/create-repo-by-command-line.git
 ```
 chmod +x install.py git-create
 ``` 
-3. Run the install.sh 
+3. Run the install.py 
 ```sh
 sudo ./install.py
 ```
