@@ -1,8 +1,10 @@
 #!/usr/bin/python3 
 #
 import os
+import pathlib
 import platform
 from os.path import expanduser
+import shutil
 
 
 def get_home_dir():
@@ -47,10 +49,19 @@ def load_existing_config_file(config_file_path):
         print("Operational system not recognized!")
         
 
+def install_git_create():
+    try:
+        pathlib("git-create").rename("/bin/git-create")
+        shutil.copy("git-create", "/bin/git-create")
+    except IOError:
+        print("[Error] - You don't haver permission to create the file.\n\tTry using sudo!")
+
+
 CONFIG_FILE_PATH= get_home_dir() + "/.githubcredentials/config"
 
 if check_config_file_exists(CONFIG_FILE_PATH) == False:
     if create_new_config_file(CONFIG_FILE_PATH) == True:
         load_existing_config_file(CONFIG_FILE_PATH)
+        install_git_create()
 else:
     load_existing_config_file(CONFIG_FILE_PATH)
